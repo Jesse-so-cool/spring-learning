@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress ALL
+    Spring容器会将每一个正在创建的Bean 标识符放在一个“当前创建Bean池”中，
+    Bean标识符在创建过程中将一直保持在这个池中，
+    因此如果在创建Bean过程中发现自己已经在“当前创建Bean池”里时将抛出
+    这也是spring是怎么检查是否有循环依赖的答案
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.jesse.springlearning.component"/>
+
+    <!--
+    构造函数注入 会报出循环依赖的错误-->
+
+    <!--<bean id="a" class="com.jesse.springlearning.po.constructPO.StudentA">-->
+        <!--<constructor-arg index="0" ref="b"></constructor-arg>-->
+    <!--</bean>-->
+    <!--<bean id="b" class="com.jesse.springlearning.po.constructPO.StudentB">-->
+        <!--<constructor-arg index="0" ref="c"></constructor-arg>-->
+    <!--</bean>-->
+    <!--<bean id="c" class="com.jesse.springlearning.po.constructPO.StudentC">-->
+        <!--<constructor-arg index="0" ref="a"></constructor-arg>-->
+    <!--</bean>-->
+
+     <!--setter注入 没有报错 -->
+        <bean id="a" class="com.jesse.springlearning.po.setterPO.StudentA">
+            <property name="studentB" ref="b"></property>
+        </bean>
+        <bean id="b" class="com.jesse.springlearning.po.setterPO.StudentB">
+            <property name="studentC" ref="c"></property>
+        </bean>
+        <bean id="c" class="com.jesse.springlearning.po.setterPO.StudentC">
+            <property name="studentA" ref="a"></property>
+        </bean>
+
+
+</beans>
