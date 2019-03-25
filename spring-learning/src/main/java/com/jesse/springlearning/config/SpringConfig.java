@@ -2,12 +2,16 @@ package com.jesse.springlearning.config;
 
 import com.jesse.springlearning.condition.LinuxCondition;
 import com.jesse.springlearning.condition.WindowsCondition;
+import com.jesse.springlearning.dao.ColorDao;
 import com.jesse.springlearning.po.Student;
+import com.jesse.springlearning.service.ColorService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.*;
 
 /**
  * 取代xml 成为配置类
  */
+@ComponentScan(value = "com.jesse.springlearning")
 @Configuration
 public class SpringConfig {
 
@@ -57,4 +61,15 @@ public class SpringConfig {
         return new Student("bill", 63);
     }
 
+    @Bean
+    public ColorDao colorDao2() {
+        return new ColorDao("2");
+    }
+
+    @Bean
+    public ColorService colorService2(@Qualifier("colorDao2") ColorDao ytr) {
+        ColorService colorService = new ColorService();
+        colorService.setColorDao2(ytr);
+        return colorService;
+    }
 }

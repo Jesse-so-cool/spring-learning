@@ -2,6 +2,7 @@ package com.jesse.springlearning.component;
 
 import com.jesse.springlearning.listener.TestEvent;
 import com.jesse.springlearning.po.Student;
+import com.jesse.springlearning.service.ColorService;
 import com.jesse.springlearning.util.ApplicationContextProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -38,6 +39,10 @@ public class utilControl {
     @RequestMapping(value = "/bean/{name}")
     public String getBean(@PathVariable String name) {
         Object bean = ApplicationContextProvider.getBean(name);
+        if (bean instanceof ColorService) {
+            ColorService colorService = (ColorService) bean;
+            return colorService.toString();
+        }
         Student a = (Student) bean;
         return a.toString();
     }
