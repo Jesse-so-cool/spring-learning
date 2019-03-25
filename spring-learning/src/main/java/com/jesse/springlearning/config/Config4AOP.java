@@ -29,17 +29,34 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * 5）、invokeInitMethods 执行初始化方法
  * 6）、processor.postProcessAfterInitialization
  * -------------------以上是AnnotationAwareAspectJAutoProxyCreator的创建过程------------------
- * <p>
+ *
  * finishBeanFactoryInitialization ： 完成BeanFactory初始化工作，创建剩下的单实例Bean
  * 1）、遍历所有bean 一次调用getBean()
  * 2）、getBean
- * 1）、从缓存查找、找不到就createBean
- * 2）、createBean
- * 1）、resolveBeforeInstantiation 	先尝试用后置处理器返回对象
- * 【BeanPostProcessor是在Bean对象创建完成初始化前后调用】
- * 【InstantiationAwareBeanPostProcessor是在创建Bean实例之前 先尝试用后置处理器返回对象】
- * 此处结论：AnnotationAwareAspectJAutoProxyCreator在任何bean创建之前会有一个拦截 因为他是InstantiationAwareBeanPostProcessor后置处理器
- * 2）、如果上边的尝试获取bean失败的话 调用doCreateBean->createBeanInstance->populateBean 和上边的creaeBean是一样的
+ *      1）、从缓存查找、找不到就createBean
+ *      2）、createBean
+ *          1）、resolveBeforeInstantiation 	先尝试用后置处理器返回对象
+ *          【BeanPostProcessor是在Bean对象创建完成初始化前后调用】
+ *          【InstantiationAwareBeanPostProcessor是在创建Bean实例之前 先尝试用后置处理器返回对象】
+ *          此处结论：AnnotationAwareAspectJAutoProxyCreator在任何bean创建之前会有一个拦截 因为他是InstantiationAwareBeanPostProcessor后置处理器
+ *              1)、查看AnnotationAwareAspectJAutoProxyCreator中postProcessBeforeInstantiation方法(每一次bean调用 都会调用该方法)   下面只关心Math、LogAspects的创建
+ *                  1）、判断当前bean是否在AdviseBeans中
+ *                  2）、判断bean是不是切面类型的（@Aspects）
+ *                  3）、是否需要跳过
+ *                      Math都不符合 -> 获取增强器（LogAspects中的四个方法）
+ *                      最后只是返回普通Math对象出去
+ *              2）、查看AnnotationAwareAspectJAutoProxyCreator中postProcessAfterInitialization方法  创建完实例之后
+ *                  1）、获取增强器（LogAspects中的四个方法）
+ *                  2）、给增强器排序
+ *                  3）、保存bean到adviseBean中
+ *                  4）、获取增强器 保存到proxyFactory
+ *                  5）、创建代理对象
+ *                      JdkDynamicAopProxy jdk动态代理（实现了接口的话）
+ *                      ObjenesisCglibAopProxy  cglib动态代理
+ *                  6）、math这个bean 在此时会被返回cglib动态代理  增强了的 对象
+ *          2）、如果上边的尝试获取bean失败的话 调用doCreateBean->createBeanInstance->populateBean 和上边的creaeBean是一样的
+ *
+ *
  */
 @ComponentScan("com.jesse.springlearning")
 @Configuration
