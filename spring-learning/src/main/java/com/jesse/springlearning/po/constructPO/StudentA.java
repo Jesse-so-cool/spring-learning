@@ -2,9 +2,14 @@ package com.jesse.springlearning.po.constructPO;
 
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class StudentA {
     private StudentB studentB ;
+
+    public StudentB getStudentB() {
+        return studentB;
+    }
 
     public void setStudentB(StudentB studentB) {
         this.studentB = studentB;

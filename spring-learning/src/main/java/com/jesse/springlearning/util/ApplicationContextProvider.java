@@ -5,6 +5,15 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+/**
+ * 通过实现ApplicationContextAware 来注入applicationContext是spring提供给我们的方法
+ * <p>
+ * 原理是：
+ * 通过ApplicationContextAwareProcessor这个后置处理器
+ * 在bean初始化之前调用postProcessBeforeInitialization
+ * 通过判断是否是通过实现ApplicationContextAware的实现类，
+ * 是的话，则调用setApplicationContext
+ */
 @Component
 public class ApplicationContextProvider
         implements ApplicationContextAware {

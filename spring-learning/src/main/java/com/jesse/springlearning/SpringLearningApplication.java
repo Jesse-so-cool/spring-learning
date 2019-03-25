@@ -16,8 +16,8 @@ public class SpringLearningApplication {
 	public static void main(String[] args) {
 		//ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         SpringApplication.run(SpringLearningApplication.class, args);
-        UtilComponent utilComponent = (UtilComponent) (ApplicationContextProvider.getBean("utilComponent"));
-        utilComponent.hello();
+        //UtilComponent utilComponent = (UtilComponent) (ApplicationContextProvider.getBean("utilComponent"));
+        //utilComponent.hello();
 	}
 
 }
