@@ -1,5 +1,7 @@
 package com.jesse.springlearning.config;
 
+import com.jesse.springlearning.po.Student2;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
@@ -36,10 +38,9 @@ import org.springframework.context.annotation.Configuration;
  *      5）、容器创建过程中 finishRefresh()
  *              1）、publishEvent(new ContextRefreshedEvent(this));
  */
-@ComponentScan(basePackages = "com.jesse.springlearning.listener")
+@ComponentScan(basePackages = {"com.jesse.springlearning.listener","com.jesse.springlearning.po.constructPO"})
 @Configuration
 public class Config4Listener {
-
 
 
 

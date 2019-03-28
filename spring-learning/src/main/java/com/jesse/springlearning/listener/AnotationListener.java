@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AnotationListener {
 
+    public AnotationListener(){
+        System.out.println("construct");
+    }
     /**
      * 监听所有
      */
