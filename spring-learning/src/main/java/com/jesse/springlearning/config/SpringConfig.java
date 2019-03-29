@@ -133,9 +133,19 @@ import org.springframework.context.annotation.*;
  *--------------------------------------------------------------------
  *                                总结
  *--------------------------------------------------------------------
- *1）、Spring容器在启动
- *
- *
+ *1）、Spring容器在启动，先保存Bean定义信息
+ *      1）、xml注册bean
+ *      2）、注解注册Bean
+ *2）、Spring容器会在XX的情况下创建Bean
+ *      1）、用到这个bean的时候 去创建
+ *      2）、finishBeanFactoryInitialization 统一创建bean
+ *3）、后置处理器
+ *      1）每一个Bean创建完成 会使用处理器处理
+ *         AutowiredAnnotationBeanPostProcessor 处理自动注入
+ *         XXXPostProcessor
+ *4）、事件驱动模型
+ *      ApplicationListener 事件监听
+ *      ApplicationEventMulticaster 事件派发
  *
  */
 @ComponentScan(value = "com.jesse.springlearning")
