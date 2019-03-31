@@ -2,7 +2,9 @@ package com.jesse.springlearning.aop;
 
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -10,14 +12,13 @@ import java.util.Arrays;
 /**
  *
  */
+//@Component
 @Aspect
 public class LogAspects {
 
     @Pointcut("execution(public int com.jesse.springlearning.aop.Math.div(..))")
     public void point() {
     }
-
-    ;
 
     @Before("point()")
     public void logStart(JoinPoint joinPoint) {
@@ -37,5 +38,13 @@ public class LogAspects {
     @AfterThrowing(value = "point()", throwing = "e")
     public void logException(JoinPoint joinPoint, Exception e) {
         System.out.println(joinPoint.getSignature() + "方法运行异常 异常为{" + e + "}");
+    }
+
+    @Around(value = "@annotation(com.jesse.invoketime.annotation.Time)")
+    public Object logAround(ProceedingJoinPoint jp) throws Throwable{
+        long start = System.currentTimeMillis();
+        Object proceed = jp.proceed();
+        System.out.println("logAround :  "+(System.currentTimeMillis()-start)+"ms");
+        return proceed;
     }
 }

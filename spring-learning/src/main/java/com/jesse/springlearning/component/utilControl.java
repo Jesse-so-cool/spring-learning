@@ -1,5 +1,6 @@
 package com.jesse.springlearning.component;
 
+import com.jesse.springlearning.aop.Math;
 import com.jesse.springlearning.listener.TestEvent;
 import com.jesse.springlearning.po.Student;
 import com.jesse.springlearning.service.ColorService;
@@ -22,7 +23,7 @@ public class utilControl {
     private ApplicationContextProvider applicationContextProvider;
 
     @RequestMapping(value = "/hello")
-    public String test(){
+    public String hello(){
         UtilComponent utilComponent = (UtilComponent) (applicationContextProvider.getBean("utilComponent"));
         utilComponent.hello();
         this.utilComponent.hello();
@@ -54,5 +55,18 @@ public class utilControl {
         System.out.println("-------所有bean---------");
         Arrays.stream(beanDefinitionNames).forEach(s -> System.out.println(s));
         return beanDefinitionNames.toString();
+    }
+
+    @Autowired
+    private Math math;
+
+    @RequestMapping(value = "/test")
+    public String test(){
+        math.div(1,1);
+        ApplicationContext applicationContext = ApplicationContextProvider.getApplicationContext();
+        String[] beanDefinitionNames = applicationContext.getBeanDefinitionNames();
+        StringBuffer sb = new StringBuffer();
+        Arrays.stream(beanDefinitionNames).forEach(s -> sb.append(s+"</br>"));
+        return sb.toString();
     }
 }

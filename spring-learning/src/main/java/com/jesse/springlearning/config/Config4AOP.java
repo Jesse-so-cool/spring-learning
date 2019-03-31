@@ -85,8 +85,28 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  *          1）、代理对象执行方法
  *          2）、CglibAopProxy.interceptor()
  *
+ *
+ * Spring 在非接口实现类的代理时  用到的时cglib代理
+ *
+ *      1.JDK动态代理的代理对象在创建时，需要使用业务实现类所实现的接口作为参数（因为在后面代理方法时需要根据接口内的方法名进行调用）。
+ *        如果业务实现类是没有实现接口而是直接定义业务方法的话，就无法使用JDK动态代理了。
+ *        并且，如果业务实现类中新增了接口中没有的方法，这些方法是无法被代理的（因为无法被调用）。
+ *
+ *        jdk原理是
+ *        JVM根据传进来的 业务实现类对象 、 方法名 、实现的接口，动态地创建了一个代理类的class文件并被字节码引擎执行，然后通过该代理类对象进行方法调用
+ *        Proxy.newProxyInstance(delegate.getClass().getClassLoader(), delegate.getClass().getInterfaces(), this);
+ *
+ *        JDK动态代理生成的代理类继承于父类Proxy 实现它的实现：
+ *        public final class $Proxy0 extends Proxy implements HelloService
+ *      2.cglib是针对类来实现代理的，原理是对指定的业务类生成一个子类，并覆盖其中业务方法实现代理。
+ *        因为采用的是继承，所以不能对final修饰的类进行代理。
+ *
+ *        CGLIB解决了动态代理的难题，它通过生成目标类子类的方式来实现来实现代理，而不是接口，规避了接口的局限性。
+ *
+ *        CGLIB是一个强大的高性能代码生成包
+ *
  */
-@ComponentScan("com.jesse.springlearning")
+@ComponentScan(basePackages = {"com.jesse.springlearning.po.constructPO","com.jesse.springlearning.aop"})
 @Configuration
 @EnableAspectJAutoProxy
 public class Config4AOP {
@@ -95,8 +115,8 @@ public class Config4AOP {
         return new Math();
     }
 
-    @Bean
-    public LogAspects logAspects() {
-        return new LogAspects();
-    }
+//    @Bean
+//    public LogAspects logAspects() {
+//        return new LogAspects();
+//    }
 }

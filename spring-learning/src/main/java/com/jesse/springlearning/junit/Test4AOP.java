@@ -18,7 +18,10 @@ public class Test4AOP {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Config4AOP.class);
         Object bean = context.getBean("math");
         Math math = (Math) bean;
-        math.div(1, 0);
+        math.div(1, 1);
+
+        String[] beanDefinitionNames = context.getBeanDefinitionNames();
+        System.out.println(Arrays.asList(beanDefinitionNames));
     }
 
 }
