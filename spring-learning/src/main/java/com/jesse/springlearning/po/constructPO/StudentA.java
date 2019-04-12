@@ -24,4 +24,9 @@ public class StudentA {
     public StudentA(StudentB studentB) {
         this.studentB = studentB;
     }
+
+    @com.jesse.invoketime.annotation.Time
+    public void say(){
+        System.out.println("what!");
+    }
 }

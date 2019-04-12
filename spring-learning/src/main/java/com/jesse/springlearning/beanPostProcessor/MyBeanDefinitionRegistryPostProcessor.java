@@ -14,7 +14,6 @@ public class MyBeanDefinitionRegistryPostProcessor implements BeanDefinitionRegi
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         System.out.println("MyBeanDefinitionRegistryPostProcessor..............postProcessBeanDefinitionRegistry");
     }
-
     /***
      * 在所有bean定义信息即将加载 bean实例还未创建
      * 所有可以用它给容器再额外添加组件

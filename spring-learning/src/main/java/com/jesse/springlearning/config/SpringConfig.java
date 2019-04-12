@@ -42,7 +42,7 @@ import org.springframework.context.annotation.*;
  *                  BeanFactoryPostProcessor、BeanDefinitionRegistryPostProcessor两个接口
  *                  1.获取所有的BeanDefinitionRegistryPostProcessor
  *                  2.依次执行实现了PriorityOrdered、Ordered接口和没有实现它们的  processor
- *                    postProcessor.postProcessBeanDefinitionRegistry(registry)
+ *                    postProcessor.postProcessBeanDefinitionRegistry(registry)  《注册各个config类下的bean信息到BeanDefinition》
  *                  3.获取所有的BeanFactoryPostProcessor
  *                  4.依次执行实现了PriorityOrdered、Ordered接口和没有实现它们的  processor
  *                    postProcessor.postProcessBeanFactory(beanFactory)
@@ -104,7 +104,7 @@ import org.springframework.context.annotation.*;
  *                                                       bp instanceof MergedBeanDefinitionPostProcessor -> bp.postProcessMergedBeanDefinition(mbd, beanType, beanName)
  *                                                  4）、 ------注意这里会出现依赖传递问题----------------
  *                                                  为bean赋值  populateBean(beanName, mbd, instanceWrapper) 初始化bean
- *                                                          1.赋值之前:
+ *                                                          1.赋值之前:addSingletonFactory
  *                                                            拿到processor 若bp instanceof InstantiationAwareBeanPostProcessor -> bp.postProcessAfterInstantiation(bw.getWrappedInstance(), beanName)
  *                                                            再一次找出该processor bp.postProcessPropertyValues
  *                                                          2.应用Bean属性的值 利用setter方法进行赋值

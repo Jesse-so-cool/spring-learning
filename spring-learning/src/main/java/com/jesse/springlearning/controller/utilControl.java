@@ -1,6 +1,7 @@
-package com.jesse.springlearning.component;
+package com.jesse.springlearning.controller;
 
 import com.jesse.springlearning.aop.Math;
+import com.jesse.springlearning.component.UtilComponent;
 import com.jesse.springlearning.listener.TestEvent;
 import com.jesse.springlearning.po.Student;
 import com.jesse.springlearning.service.ColorService;

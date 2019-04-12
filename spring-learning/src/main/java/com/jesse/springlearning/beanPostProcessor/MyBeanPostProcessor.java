@@ -5,6 +5,8 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 /**
+ * spring boot 专用！！！！
+ *
  * Bean的生命周期： Bean创建--初始化--销毁
  * <p>
  * Bean的后置处理器
